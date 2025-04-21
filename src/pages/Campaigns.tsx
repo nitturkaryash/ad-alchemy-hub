@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import DataTable from "@/components/DataTable";
+import DataTable, { Column } from "@/components/DataTable";
 import { generateCampaigns, Campaign } from "@/data/mockData";
 import { Plus, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -19,7 +19,7 @@ const Campaigns = () => {
     return campaign.status === filter;
   });
 
-  const campaignColumns = [
+  const campaignColumns: Column<Campaign>[] = [
     {
       header: "Campaign",
       accessor: "name",
@@ -55,9 +55,18 @@ const Campaigns = () => {
       header: "Spend",
       accessor: (row: Campaign) => `$${row.spend.toLocaleString()}`,
     },
-    { header: "CTR", accessor: (row: Campaign) => `${row.ctr}%` },
-    { header: "CPC", accessor: (row: Campaign) => `$${row.cpc.toFixed(2)}` },
-    { header: "Conversions", accessor: "conversions" },
+    { 
+      header: "CTR", 
+      accessor: (row: Campaign) => `${row.ctr}%` 
+    },
+    { 
+      header: "CPC", 
+      accessor: (row: Campaign) => `$${row.cpc.toFixed(2)}` 
+    },
+    { 
+      header: "Conversions", 
+      accessor: (row: Campaign) => row.conversions.toString() 
+    },
     {
       header: "Actions",
       accessor: () => (
